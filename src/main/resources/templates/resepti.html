@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${resepti.title}"></title>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        body {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #34568B; /* Vaihda tämä väri haluamaksesi */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${resepti.title}"></h1>
+        <img th:src="@{'/images/' + ${resepti.reseptiId}}" alt="Reseptin Kuva" class="img-fluid" />
+        <h2>Ainekset</h2>
+        <p th:text="${resepti.ainekset}"></p>
+        <h2>Ohjeet</h2>
+        <p th:text="${resepti.reseptiText}"></p>
+    </div>
+</body>
+</html>

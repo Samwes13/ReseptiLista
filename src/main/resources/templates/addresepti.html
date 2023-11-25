@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Uusi resepti</title>
+</head>
+<body>
+
+    <h1>Lisää uusi resepti</h1>
+    <form th:object="${resepti}" th:action="@{/save}" method="post" enctype="multipart/form-data">
+        <label for="title">Reseptin nimi</label>
+        <input type="text" id="title" th:field="*{title}">
+        
+        <label for="ainekset">Ainekset</label>
+        <textarea id="ainekset" th:field="*{ainekset}"></textarea>
+
+        <label for="reseptiText">Reseptin ohjeet</label>
+        <textarea id="reseptiText" th:field="*{reseptiText}"></textarea>
+
+        <label for="ruokalaji">Ruokalaji</label>
+		        <select th:field="*{ruokalaji}">
+		    <option th:each="ruokalaji : ${ruokalajit}" 
+		            th:value="${ruokalaji.ruokalajiId}" 
+		            th:text="${ruokalaji.ruokalajike}">
+		    </option>
+		</select>
+
+         
+		
+
+        <label for="image">Kuva</label>
+        <input type="file" id="image" name="image" accept="image/*">
+
+        <input type="submit" value="Tallenna" class="btn btn-primary">
+    </form>
+</body>
+</html>

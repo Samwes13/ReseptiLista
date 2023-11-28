@@ -2,6 +2,7 @@ package com.example.ReseptiLista.domain;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -14,7 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.HashSet;
+import java.util.List;
 
 
 @Entity
@@ -27,7 +31,9 @@ String title;
 String ainekset;
 String reseptiText;
 
+
 @Column(length = 50000000)
+@JsonIgnore
 private byte[] picByte;
 
 @ManyToOne
@@ -35,8 +41,10 @@ private byte[] picByte;
 @JoinColumn(name = "ruokalajiId")
 private Ruokalaji ruokalaji;
 
+@OneToMany(mappedBy = "resepti", cascade = CascadeType.ALL)
+@JsonIgnoreProperties("resepti")
+private List<Kommentti> kommentit;
 
-//Konstruktori auttaa luomaan uuden reseptin
 
 
 public Resepti() {
@@ -111,6 +119,25 @@ public Ruokalaji getRuokalaji() {
 public void setRuokalaji(Ruokalaji ruokalaji) {
 	this.ruokalaji = ruokalaji;
 }
+
+
+
+public List<Kommentti> getKommentit() {
+	return kommentit;
+}
+
+
+
+public void setKommentit(List<Kommentti> kommentit) {
+	this.kommentit = kommentit;
+}
+
+
+
+
+
+
+
 
 
 }

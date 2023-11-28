@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <title>Uusi resepti</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Bootstrapin primääriväri */
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px; /* Säädä tämä leveys tarpeen mukaan */
+            margin: 0 auto;
+        }
+        label {
+            margin-top: 10px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lisää uusi kommentti</h1>
+    <form th:action="@{/saveKommentti/{reseptiId}(reseptiId=${reseptiId})}" method="post">
+        <textarea name="kommenttiText" required></textarea>
+        <button type="submit" class="btn btn-primary">Lähetä kommentti</button>
+    </form>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.example.ReseptiLista.service;
 
+import com.example.ReseptiLista.domain.Kommentti;
+import com.example.ReseptiLista.domain.KommenttiRepository;
 import com.example.ReseptiLista.domain.Resepti;
 import com.example.ReseptiLista.domain.ReseptiRepository;
 import com.example.ReseptiLista.domain.Ruokalaji;
@@ -17,7 +19,8 @@ public class ReseptiService {
     @Autowired
     private RuokalajiRepository ruokalajiRepository;
     
-    
+    @Autowired
+    private KommenttiRepository kommenttiRepository;
 
     // Tallentaa reseptin ja siihen liittyvän kuvan
     public void saveResepti(Resepti resepti) {
@@ -48,8 +51,16 @@ public class ReseptiService {
         reseptiRepository.deleteById(reseptiId);
     }
     
-    
+ // Tallenna uusi kommentti
+    public Kommentti saveKommentti(Kommentti kommentti) {
+        return kommenttiRepository.save(kommentti);
+    }
 
+    // Hae kaikki kommentit tietylle reseptille
+    public Iterable<Kommentti> getKommentitByResepti(Long reseptiId) {
+        return kommenttiRepository.findByReseptiReseptiId(reseptiId);
+    }
+    
     // Voit lisätä muita metodeja, kuten reseptin haku, päivitys, poisto jne.
 
 }

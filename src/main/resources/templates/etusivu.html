@@ -7,8 +7,10 @@
      <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
     <title>Reseptilista</title>
     <style>
-    
-   
+		    body {
+		            padding: 20px;
+		        }
+		   
         .reseptilista {
             display: flex;
             flex-wrap: wrap;
@@ -43,7 +45,11 @@
 
     <div class="header">
         <h1>Reseptit</h1>
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
+        <form th:action="@{/logout}" sec:authorize="hasRole('ROLE_ADMIN')" method=
+		"post" style="display:inline;">
+		<input type="submit" value="Sign Out" class="btn btn-warning"/>
+		</form>
+        <a href="login" type="button" class="btn btn-outline-primary me-2">Login</a>
     </div>
     
 
@@ -52,15 +58,15 @@
      th:onclick="'window.location.href=\'/resepti/' + ${resepti.reseptiId} + '\''">
     <h2 th:text="${resepti.title}"></h2>
     <img th:if="${resepti.picByte}" th:src="@{'/images/' + ${resepti.reseptiId}}" alt="Reseptin Kuva" />
-    <a th:href="@{'/editResepti/' + ${resepti.reseptiId}}" class="btn btn-primary">Muokkaa</a>
-    <a th:href="@{'/deleteResepti/' + ${resepti.reseptiId}}" class="btn btn-primary">Poista</a>
+    <a th:href="@{'/editResepti/' + ${resepti.reseptiId}}" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">Muokkaa</a>
+    <a th:href="@{'/deleteResepti/' + ${resepti.reseptiId}}" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">Poista</a>
 </div>
     </div>
     
     
     
     <div style="clear: both; display: block; height: 10px;"></div>
-    <a href="/addresepti" class="btn btn-primary">Lisää uusi</a>
+    <a href="/addresepti" class="btn btn-primary" sec:authorize="hasRole('ROLE_ADMIN')">Lisää uusi</a>
     
     
 </body>

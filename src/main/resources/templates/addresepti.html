@@ -5,35 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
     <title>Uusi resepti</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff; /* Bootstrapin primääriväri */
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 600px; /* Säädä tämä leveys tarpeen mukaan */
+            margin: 0 auto;
+        }
+        label {
+            margin-top: 10px;
+        }
+        .form-control {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-
     <h1>Lisää uusi resepti</h1>
     <form th:object="${resepti}" th:action="@{/save}" method="post" enctype="multipart/form-data">
-        <label for="title">Reseptin nimi</label>
-        <input type="text" id="title" th:field="*{title}">
-        
-        <label for="ainekset">Ainekset</label>
-        <textarea id="ainekset" th:field="*{ainekset}"></textarea>
+        <div class="mb-3">
+            <label for="title" class="form-label">Reseptin nimi</label>
+            <input type="text" id="title" th:field="*{title}" class="form-control">
+        </div>
 
-        <label for="reseptiText">Reseptin ohjeet</label>
-        <textarea id="reseptiText" th:field="*{reseptiText}"></textarea>
+        <div class="mb-3">
+            <label for="ainekset" class="form-label">Ainekset</label>
+            <textarea id="ainekset" th:field="*{ainekset}" class="form-control"></textarea>
+        </div>
 
-        <label for="ruokalaji">Ruokalaji</label>
-		        <select th:field="*{ruokalaji}">
-		    <option th:each="ruokalaji : ${ruokalajit}" 
-		            th:value="${ruokalaji.ruokalajiId}" 
-		            th:text="${ruokalaji.ruokalajike}">
-		    </option>
-		</select>
+        <div class="mb-3">
+            <label for="reseptiText" class="form-label">Reseptin ohjeet</label>
+            <textarea id="reseptiText" th:field="*{reseptiText}" class="form-control"></textarea>
+        </div>
 
-         
-		
+        <div class="mb-3">
+            <label for="ruokalaji" class="form-label">Ruokalaji</label>
+            <select id="ruokalaji" th:field="*{ruokalaji}" class="form-select">
+                <option th:each="ruokalaji : ${ruokalajit}" 
+                        th:value="${ruokalaji.ruokalajiId}" 
+                        th:text="${ruokalaji.ruokalajike}">
+                </option>
+            </select>
+        </div>
 
-        <label for="image">Kuva</label>
-        <input type="file" id="image" name="image" accept="image/*">
+        <div class="mb-3">
+            <label for="image" class="form-label">Kuva</label>
+            <input type="file" id="image" name="image" accept="image/*" class="form-control">
+        </div>
 
-        <input type="submit" value="Tallenna" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary">Tallenna</button>
     </form>
 </body>
 </html>

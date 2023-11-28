@@ -19,19 +19,42 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             line-height: 1.5;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h1 th:text="${resepti.title}"></h1>
+    <header class="header">
+<h1 th:text="${resepti.title}"></h1>
+ <a href="/etusivu"class="btn btn-primary rounded-circle p-3 lh-1">X</a>
+</header>
+        
         <img th:src="@{'/images/' + ${resepti.reseptiId}}" alt="Reseptin Kuva" class="img-fluid" />
-        <h2>Ainekset</h2>
-        <p th:text="${resepti.ainekset}"></p>
-        <h2>Ohjeet</h2>
-        <p th:text="${resepti.reseptiText}"></p>
+        <p class="btn btn-warning rounded-pill px-3" th:text="${resepti.ruokalaji.ruokalajike}"></p>
+        <h3>Ainekset</h3>
+        <p th:utext="${resepti.ainekset}"></p>
+        <h3>Ohjeet</h3>
+        <p th:utext="${resepti.reseptiText}"></p>
+    	<div>
+          <!-- Kommenttien listaus -->
+          <h3>Kommentit</h3>
+        <div th:each="kommentti : ${resepti.kommentit}">
+    <p th:text="${kommentti.kommenttiText}"></p>
+</div>
+
+
+        <!-- Linkki kommentin lisäämiseen -->
+        <a th:href="@{/addKommentti/{reseptiId}(reseptiId=${resepti.reseptiId})}" class="btn btn-primary">Lisää kommentti</a>
     </div>
+     
 </body>
 </html>

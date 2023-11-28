@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ import com.example.ReseptiLista.domain.ReseptiRepository;
 import com.example.ReseptiLista.domain.Ruokalaji;
 import com.example.ReseptiLista.domain.RuokalajiRepository;
 import com.example.ReseptiLista.service.ReseptiService;
-
+import com.example.ReseptiLista.domain.Kommentti;
 
 
 @Controller
@@ -33,6 +34,11 @@ public class ReseptiController {
 
     @Autowired
     private ReseptiService reseptiService;
+    
+    @RequestMapping(value="/login")
+    public String login() {	
+        return "login";
+    }
     
     @GetMapping("/etusivu")
     public String viewReseptiList(@RequestParam(required = false) Long ruokalajiId, Model model) {
@@ -63,7 +69,7 @@ public class ReseptiController {
 
         return "ruokalajiView"; // Olettaen, että sinulla on erillinen näkymä tälle
     }
-    
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/deleteResepti/{reseptiId}")
     public String deleteResepti(@PathVariable Long reseptiId) {
         reseptiService.deleteResepti(reseptiId);
@@ -74,6 +80,9 @@ public class ReseptiController {
     public String showEditForm(@PathVariable Long reseptiId, Model model) {
         Resepti resepti = reseptiService.getReseptiById(reseptiId);
         model.addAttribute("resepti", resepti);
+        Iterable<Ruokalaji> ruokalajit = reseptiService.getAllRuokalajit();
+        model.addAttribute("ruokalajit", ruokalajit);
+        
         return "editResepti"; // Olettaen, että sinulla on erillinen näkymä "editResepti.html"
     }
 
@@ -122,7 +131,11 @@ public class ReseptiController {
         reseptiService.saveResepti(resepti);
         return "redirect:/etusivu"; // ohjaa käyttäjän reseptilista-sivulle tallennuksen jälkeen
     }
-
+    
+    
+    
+    
+    
     // Lisää muita metodeja tarvittaessa...
 
 }

@@ -32,18 +32,19 @@ public class KommenttiController {
         List<Kommentti> kommentit = (List<Kommentti>) kommenttiRepository.findByReseptiReseptiId(reseptiId);
         model.addAttribute("kommentit", kommentit);
         model.addAttribute("reseptiId", reseptiId);
-        return "resepti"; // Thymeleaf-näkymä kommenttien listaukselle
+        return "resepti"; 
     }
 
-    // Näyttää lomakkeen uuden kommentin lisäämiseksi
+    // Nayttaa lomakkeen uuden kommentin lisäämiseksi
     @GetMapping("/addKommentti/{reseptiId}")
     public String addKommenttiForm(@PathVariable Long reseptiId, Model model) {
         Kommentti uusiKommentti = new Kommentti();
         model.addAttribute("kommentti", uusiKommentti);
         model.addAttribute("reseptiId", reseptiId);
-        return "kommentti"; // Thymeleaf-lomake uuden kommentin lisäämiseksi
+        return "kommentti"; 
     }
-
+    
+    //Tallentaa tietyn kommentin tietylle reseptille
     @PostMapping("/saveKommentti/{reseptiId}")
     public String saveKommentti(@PathVariable Long reseptiId, @RequestParam("kommenttiText") String kommenttiTeksti) {
         Resepti resepti = reseptiService.getReseptiById(reseptiId);

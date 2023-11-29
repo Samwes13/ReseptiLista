@@ -26,7 +26,7 @@ public class ReseptiRestController {
         return (List<Resepti>) reseptiService.getAllReseptit();
     }
 
-    // Hae yksittäinen resepti ID:n perusteella
+    // Hae yksittäinen resepti ID:n perusteella ja kommentit
     @GetMapping("/api/resepti/{id}")
     public ResponseEntity<Resepti> getReseptiById(@PathVariable("id") Long id) {
         Resepti resepti = reseptiService.getReseptiById(id);

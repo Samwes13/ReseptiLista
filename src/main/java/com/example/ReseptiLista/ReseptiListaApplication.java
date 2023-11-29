@@ -30,13 +30,27 @@ public class ReseptiListaApplication {
 public CommandLineRunner demo(ReseptiRepository reseptirepository, RuokalajiRepository lajirepository, ReseptiService reseptiService, AppUserRepository auRepository) {
 	return (arg) -> {
 		
-		lajirepository.save(new Ruokalaji("Pääruoka"));
-		lajirepository.save(new Ruokalaji("Jälkiruoka"));
-		lajirepository.save(new Ruokalaji("Välipala"));
-		lajirepository.save(new Ruokalaji("Leivonta"));
+		Ruokalaji ruokalji1 = lajirepository.save(new Ruokalaji("Pääruoka"));
+		Ruokalaji ruokalji2 = lajirepository.save(new Ruokalaji("Jälkiruoka"));
+		Ruokalaji ruokalji3 = lajirepository.save(new Ruokalaji("Välipala"));
+		Ruokalaji ruokalji4 = lajirepository.save(new Ruokalaji("Leivonta"));
 		
 		//Path kuvaPolku = Paths.get(ClassLoader.getSystemResource("static/images/lihapulla.jpg").toURI());
 		//byte[] kuva = Files.readAllBytes(kuvaPolku);
+		
+		// Ladataan kuva
+				Path kuvaPolku = Paths.get(ClassLoader.getSystemResource("static/images/lihapulla.jpg").toURI());
+				byte[] kuva = Files.readAllBytes(kuvaPolku);
+
+				// Luodaan esimerkki resepti
+				Resepti lihapullat = new Resepti();
+				lihapullat.setTitle("Lihapullat");
+				lihapullat.setAinekset("400g jauhelihaa<br> 1 sipuli<br> 1 kananmuna<br> suolaa<br> pippuria");
+				lihapullat.setReseptiText("1.Sekoita ainekset ja pyörittele lihapulliksi.<br> 2.Paista 200 asteessa 20 minuuttia.");
+				lihapullat.setRuokalaji(ruokalji1); // Olettaen, että ruokalaji on tallennettu tällä nimellä
+				lihapullat.setPicByte(kuva);
+
+				reseptirepository.save(lihapullat);
 
 		// Create users with BCrypt encoded password (user/user, admin/admin)
 					AppUser user1 = new AppUser("user", "$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6", "USER");

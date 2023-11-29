@@ -35,11 +35,13 @@ public class ReseptiController {
     @Autowired
     private ReseptiService reseptiService;
     
+    //Metodi joka maarittelee polun, jolla tama aktivoidaan
     @RequestMapping(value="/login")
     public String login() {	
         return "login";
     }
     
+    //Kasittelee GET-pyynnon"/etusivu"-osoitteeseen. Näyttää reseptilistan
     @GetMapping("/etusivu")
     public String viewReseptiList(@RequestParam(required = false) Long ruokalajiId, Model model) {
         Iterable<Resepti> reseptit;
@@ -57,18 +59,7 @@ public class ReseptiController {
         return "etusivu";
     }
     
-    
-    @GetMapping("/ruokalaji/{ruokalajiId}")
-    public String viewReseptitByRuokalaji(@PathVariable Long ruokalajiId, Model model) {
-        Iterable<Resepti> reseptit = reseptiService.getReseptitByRuokalaji(ruokalajiId);
-        model.addAttribute("reseptit", reseptit);
-
-        // Lisää myös kaikki ruokalajit malliin, jos haluat näyttää valikon
-        Iterable<Ruokalaji> ruokalajit = reseptiService.getAllRuokalajit();
-        model.addAttribute("ruokalajit", ruokalajit);
-
-        return "ruokalajiView"; // Olettaen, että sinulla on erillinen näkymä tälle
-    }
+    //Delete tominto, jolla on ROLE_ADMIN
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/deleteResepti/{reseptiId}")
     public String deleteResepti(@PathVariable Long reseptiId) {
@@ -76,6 +67,7 @@ public class ReseptiController {
         return "redirect:/etusivu";
     }
     
+    //EDIT toiminto, joka nayttaa tietyn reseptin muokkaamisen
     @GetMapping("/editResepti/{reseptiId}")
     public String showEditForm(@PathVariable Long reseptiId, Model model) {
         Resepti resepti = reseptiService.getReseptiById(reseptiId);
@@ -83,9 +75,10 @@ public class ReseptiController {
         Iterable<Ruokalaji> ruokalajit = reseptiService.getAllRuokalajit();
         model.addAttribute("ruokalajit", ruokalajit);
         
-        return "editResepti"; // Olettaen, että sinulla on erillinen näkymä "editResepti.html"
+        return "editResepti"; // 
     }
-
+    
+    //Paivittaa reseptin tietokantaan
     @PostMapping("/updateResepti/{reseptiId}")
     public String updateResepti(@PathVariable Long reseptiId, @ModelAttribute Resepti resepti, 
                                 @RequestParam("image") MultipartFile file) throws IOException {
@@ -96,6 +89,7 @@ public class ReseptiController {
         return "redirect:/etusivu";
     }
     
+    //Palauttaa reseptiin liittyvan kuvan
     @GetMapping("/images/{reseptiId}")
     public ResponseEntity<byte[]> getReseptiImage(@PathVariable Long reseptiId) {
         Resepti resepti = reseptiService.getReseptiById(reseptiId);
@@ -103,7 +97,7 @@ public class ReseptiController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
     }
 
-    // Näyttää lomakkeen uuden reseptin lisäämiseksi
+    // Nayttaa lomakkeen uuden reseptin lisaamiseksi
     @GetMapping("/addresepti")
     public String addReseptiForm(Model model) {
         model.addAttribute("resepti", new Resepti());
@@ -114,6 +108,7 @@ public class ReseptiController {
         return "addresepti";
     }
     
+    //Nayttaa yksittaisen reseptin
     @GetMapping("/resepti/{reseptiId}")
     public String viewResepti(@PathVariable Long reseptiId, Model model) {
         Resepti resepti = reseptiService.getReseptiById(reseptiId);
@@ -129,14 +124,14 @@ public class ReseptiController {
             resepti.setPicByte(file.getBytes());
         }
         reseptiService.saveResepti(resepti);
-        return "redirect:/etusivu"; // ohjaa käyttäjän reseptilista-sivulle tallennuksen jälkeen
+        return "redirect:/etusivu"; // ohjaa kayttajan reseptilista-sivulle tallennuksen jalkeen
     }
     
     
     
     
     
-    // Lisää muita metodeja tarvittaessa...
+    
 
 }
 

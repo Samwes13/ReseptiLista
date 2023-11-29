@@ -33,10 +33,10 @@
 <body>
 
     <div class="container">
-    <header class="header">
-<h1 th:text="${resepti.title}"></h1>
- <a href="/etusivu"class="btn btn-primary rounded-circle p-3 lh-1">X</a>
-</header>
+	    <header class="header">
+			<h1 th:text="${resepti.title}"></h1>
+	 		<a href="/etusivu"class="btn btn-primary rounded-circle p-3 lh-1">X</a>
+		</header>
         
         <img th:src="@{'/images/' + ${resepti.reseptiId}}" alt="Reseptin Kuva" class="img-fluid" />
         <p class="btn btn-warning rounded-pill px-3" th:text="${resepti.ruokalaji.ruokalajike}"></p>

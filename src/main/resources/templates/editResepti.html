@@ -23,10 +23,23 @@
         .form-control {
             margin-bottom: 10px;
         }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
     </style>
 </head>
 <body>
-    <h1>Muokkaa reseptiä</h1>
+	<div class="container">
+	    <header class="header">
+			<h1>Muokkaa reseptiä</h1>
+	 		<a href="/etusivu"class="btn btn-primary rounded-circle p-3 lh-1">X</a>
+		</header>
+		</div>
+
     <form th:action="@{'/updateResepti/' + ${resepti.reseptiId}}" th:object="${resepti}" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Reseptin nimi</label>
